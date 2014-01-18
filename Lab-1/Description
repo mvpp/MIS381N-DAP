@@ -1,1 +1,54 @@
-https://docs.google.com/document/d/1o8YL-xBI1bP4FiZogd5U26mVJd4gfDKxqzBBYRakvjs/pub
+Page suggestions from browsing history
+
+Executive Summary
+
+You will write a program that analyzes log file data to find the pair of pages that are most frequently viewed together in the same browsing session.
+Purpose
+
+Gain familiarity with the process of writing code
+Gain familiarity with the submission process
+Sharpen your skills with coding in primitive Java
+Understand some of the issues in analyzing log data
+Preliminaries
+
+Read the DAP General FAQ.
+Download and install Eclipse and the JDK (Described in the FAQ)
+Review the submission process via Blackboard (Described in the FAQ)
+Deliverables
+
+The LogAnalysis.java program source file.
+Introduction
+
+Web servers log every page that they serve up. Here is a simplified view of the log file format:
+2134543543,articles/finance/inr-predictions.html,34ha2e123oie
+2134543611,articles/finance/option-plays-2013.html,543fdfdsf432
+2134543653,reports/oil/trends-gs-09-07-2013.pdf,543fdfdsf432
+...
+Each page that’s served is logged with a single line. The fields within the line are comma-separated. For the purpose of this lab, there are three fields. The first is the UNIX epoch time, which is the number of milliseconds since Jan 1, 1970. The second is the page served. The third is a string that uniquely identifies the person browsing these pages.
+For any pair of pages (P,Q) define the affinity to be the number of persons who viewed both.
+Your goal in this lab is to take as input a log file and return the pair of pages that has the highest affinity. In case of ties return any maximum common count pair. See the provided template code for details.
+Implementation notes
+
+Do not use any data structures (specifically, do not write any yourself, and do not use code from Java Collections). You must implement this code using nothing but arrays and primitive types. (In part this is to give you a better appreciation for the data structures we will study later.)
+You can assume that there are no more than 1000 different persons and 5000 distinct pages. The number of lines in the log file is not bounded.
+Assume the input is valid, i.e., each line has three comma separated fields, and that each field is valid (e.g., first field is valid integer, second and third fields have no commas)
+Use the simplest approach you can think of - it does not have to be elegant or fast. For example:
+You could allocate an array of 1000 strings and use it to map the string identifying a person to an integer (the array index), ditto for the files.
+Allocate a Boolean array of length 5000 for each person, and use this to record which files each person has viewed.
+For every pair of files compute how many people viewed both of those files, and track the pair with the maximum count.
+Steps
+
+Download this starter  LogAnalysis.java file and this LogAnalysisTest.java file.
+Add these files to your project, the first as a java class, the second as a junit test case.
+Submit your finished LogAnalysis.java source code file via blackboard.
+Grading
+
+You will receive an integer score from 0-3 for functionality. Refer to the General FAQ to see how that score is assigned.
+FAQ
+
+This seems like a really inefficient way to solve the problem, is there an approach that’s takes less compute time?
+Yes - you can improve the runtime dramatically using hashtables
+How are actual log files organized?
+They record a lot more information (based on the configuration settings), e.g., the requestor IP, requesting browser type, return status, session cookie, etc.
+Is this a meaningful computation?
+In practice, one would focus on pairs that are viewed in a single session, and weigh the contribution of a pair based on how far apart the pages were. Also, one would return all pairs sorted by affinity, upto a threshold/maximum number of pages. Knowledge of these pairs can be used, for example, for recommended readings.
